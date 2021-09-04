@@ -1,0 +1,24 @@
+# よく出てくるコロン
+# 3000:3000は「ホスト:コンテナ」
+# 保存場所は、コンテナ・DockerVM・ホストの３種類
+# DockerVM → Volumes → データの永続化が必要なもの
+# ホスト → ホスト → アプリケーションコード
+
+# myapp → linuxのroot dirにディレクトリが作られる。
+
+version: '3'
+services: 
+  app:
+    image: 'node'
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/myapp
+    working_dir: /myapp
+    tty: true
+  db:
+    image: 'mysql:8'
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: password
